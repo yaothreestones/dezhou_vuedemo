@@ -53,4 +53,22 @@ export default {
         return axios.post('/med/dezhou/company/web/hwStatIndex/companyInByInstType.do?t=' + new Date().getTime(), parm)
     },
 
+    //医院统计
+    //近30天医废回收总量
+    hsNearly: function (parm) {
+        return axios.post('/med/dezhou/company/web/hwStatInst/nearly30.do?t=' + new Date().getTime(), parm)
+    },
+    //各医院医废统计
+    hsList: function (parm) {
+        return axios.post('/med/dezhou/company/web/hwStatInst/list.do?t=' + new Date().getTime(), parm)
+    },
+    //统计详情
+    hsListDetail: function (parm) {
+        return axios.post('/med/dezhou/company/web/hwStatInst/listDetail.do?t=' + new Date().getTime(), parm)
+    },
+    //追溯
+    hsbagDetail: function (parm) {
+        return axios.post('/med/dezhou/company/web/hwStatInst/bagDetail.do?t=' + new Date().getTime(), parm)
+    },
+
 }

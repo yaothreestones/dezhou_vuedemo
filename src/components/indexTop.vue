@@ -9,8 +9,15 @@
           style="display:flex;width: 80%;margin: auto;    background: linear-gradient(#36c7d5,#079fad);"
           id="menuNavigate"
         >
-          <div class="iof_nav_parent" v-for="(item,index) in menuLists" :key="index">
-            <div class="iof_nav_parentName" @click="goMenu(item.url,item.id,item.name)">{{item.name}}</div>
+          <div
+            :class="[selected[index]?'iof_nav_parent active':'iof_nav_parent']"
+            v-for="(item,index) in menuLists"
+            :key="index"
+          >
+            <div
+              class="iof_nav_parentName"
+              @click="goMenu(item.url,item.id,item.name,index)"
+            >{{item.name}}</div>
           </div>
         </div>
         <div id="iof_position">
@@ -36,14 +43,16 @@
 <script>
 import Ajax from "@/components/ajax/ajax";
 import { mapState, mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
       username: JSON.parse(localStorage.getItem("admin")).realName,
       menuLists: [],
-      location:''
+      location: ""
     };
   },
+
   methods: {
     logout() {
       Ajax.logout({}).then(res => {
@@ -58,13 +67,20 @@ export default {
         this.$store.dispatch("addFun", this.menuLists);
       });
     },
-    goMenu(url, id,name) {
+    goMenu(url, id, name, index) {
       this.$emit("goMenu", { url, id });
-      this.location = name
-    }
+      this.location = name;
+      this.$store.commit("changeSelceted", index);
+    },
+
+   
   },
   created() {},
-  computed: {},
+  computed: {
+    ...mapState({
+      selected: "selected"
+    })
+  },
   mounted() {
     this.menuNavigate();
   }
